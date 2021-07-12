@@ -26,3 +26,5 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IlVwVDh2VVFQdWlZTlhINmxfVldFNEJmNVI0d1BtVzN1WTQtd00y
 1. Startup Probe,execute only initializing.
 2. Liveness Probe,if fail the pod will restart.
 3. Readiness Probe, if fails no traffic.
+2 & 3 suitable for quick check so we can handle unavailable pod more timely.For long check use 1. [Reference](https://stackoverflow.com/questions/65858309/why-do-i-need-3-different-kind-of-probes-in-kubernetes-startupprobe-readinessp)
+
