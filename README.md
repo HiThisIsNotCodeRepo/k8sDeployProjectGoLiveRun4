@@ -5,10 +5,7 @@
 3. Scale
 ## kubernete cluster set up
 3 Master, 2 nodes
-### IP address list
-
-
-Token:
+## Deployment file
 ```yaml
 apiVersion: networking.k8s.io/v1beta1 
 kind: Ingress
