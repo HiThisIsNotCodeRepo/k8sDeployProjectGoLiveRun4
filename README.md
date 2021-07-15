@@ -3,6 +3,8 @@
 1. Handle server down.
 2. Handle program hang.
 3. Scale
+## Architecture
+![](https://i.imgur.com/fAWmc4m.png)
 ## kubernete cluster
 ![](https://i.imgur.com/Z9GJfmE.png)
 ## Deployment
@@ -129,5 +131,6 @@ spec:
           - containerPort: 5000
 
 ```
+
 
 
