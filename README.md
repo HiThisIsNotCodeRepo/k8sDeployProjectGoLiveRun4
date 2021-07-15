@@ -11,6 +11,8 @@
 ![](https://i.imgur.com/ooz23FM.png)
 ## Service
 ![](https://i.imgur.com/FlJ4xgY.png)
+## Dashboard
+![](https://i.imgur.com/2sP1kQX.png)
 ## Create secret for https
 ```shell=
 kubectl create secret tls paotui-ingress-secret --cert=paotui.crt --key=paotui.key
