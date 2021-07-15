@@ -4,7 +4,7 @@
 2. Handle program hang.
 3. Scale
 ## Architecture
-![](https://i.imgur.com/fAWmc4m.png)
+![](https://i.imgur.com/lQkY15X.png)
 ## kubernete cluster
 ![](https://i.imgur.com/Z9GJfmE.png)
 ## Deployment
