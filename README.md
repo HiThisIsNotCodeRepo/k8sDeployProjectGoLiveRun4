@@ -1,10 +1,20 @@
-# kubernetes Note
+# Deploy ProjectGoLiveRun4 on kubernetes
 ## What kubernetes can solve?
 1. Handle server down.
 2. Handle program hang.
 3. Scale
-## kubernete cluster set up
-3 Master, 2 nodes
+## kubernete cluster
+![](https://i.imgur.com/Z9GJfmE.png)
+## Deployment
+![](https://i.imgur.com/rWwiAEF.png)
+## Ingress
+![](https://i.imgur.com/ooz23FM.png)
+## Service
+![](https://i.imgur.com/FlJ4xgY.png)
+## Create secret for https
+```shell=
+kubectl create secret tls paotui-ingress-secret --cert=paotui.crt --key=paotui.key
+```
 ## Deployment file
 ```yaml
 apiVersion: networking.k8s.io/v1beta1 
