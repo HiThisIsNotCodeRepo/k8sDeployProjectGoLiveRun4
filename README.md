@@ -131,6 +131,30 @@ spec:
           - containerPort: 5000
 
 ```
-
+## Debug service
+### Using busybox
+```shell=
+# 1
+cat<<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: default
+spec:
+  containers:
+  - name: busybox
+    image: radial/busyboxplus:curl
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+  restartPolicy: Always
+EOF
+# 2
+kubectl exec -ti busybox -- sh
+# 3
+curl service-paotui-front-end
+```
 
 
