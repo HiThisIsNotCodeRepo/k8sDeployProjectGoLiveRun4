@@ -95,12 +95,24 @@ spec:
   selector:
     matchLabels:
       app: deployment-paotui-front-end
-  replicas: 3
+  replicas: 6
   template:
     metadata:
       labels:
         app: deployment-paotui-front-end
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - deployment-paotui-front-end
+              topologyKey: kubernetes.io/hostname
       containers:
       - name: deployment-paotui-front-end
         image: magicpowerworld/paotui_front_end:20210714
@@ -128,12 +140,24 @@ spec:
   selector:
     matchLabels:
       app: deployment-paotui-back-end
-  replicas: 3
+  replicas: 6
   template:
     metadata:
       labels:
         app: deployment-paotui-back-end
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - deployment-paotui-back-end
+              topologyKey: kubernetes.io/hostname
       containers:
       - name: deployment-paotui-back-end
         image: magicpowerworld/paotui_back_end:20210714
@@ -149,6 +173,7 @@ spec:
         key: node.kubernetes.io/not-ready
         operator: Exists
         tolerationSeconds: 10
+
 ```
 ## Debug service
 ### Using busybox
@@ -188,3 +213,20 @@ When node become notready state the pod will leave the node in 10sec.
         operator: Exists
         tolerationSeconds: 10
 ```
+### Ensure pods spread evenly across nodes
+Affinity define how pods creation distributed across nodes, podAntiAffinity will ensure not all pods created on one single host. It enhances pods availability. 
+```yaml=
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - deployment-paotui-front-end
+              topologyKey: kubernetes.io/hostname
+```
+![](https://i.imgur.com/hnZbtNR.png)
