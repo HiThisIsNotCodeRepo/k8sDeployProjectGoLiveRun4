@@ -21,7 +21,7 @@ kubectl create secret tls paotui-ingress-secret --cert=paotui.crt --key=paotui.k
 ```
 ## Deployment file
 ```yaml
-apiVersion: networking.k8s.io/v1beta1 
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   annotations:
@@ -104,32 +104,51 @@ spec:
       containers:
       - name: deployment-paotui-front-end
         image: magicpowerworld/paotui_front_end:20210714
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 10
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 10
 ---
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    labels:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: deployment-paotui-back-end
+  name: deployment-paotui-back-end
+  namespace: default
+spec:
+  selector:
+    matchLabels:
       app: deployment-paotui-back-end
-    name: deployment-paotui-back-end
-    namespace: default
-  spec:
-    selector:
-      matchLabels:
+  replicas: 3
+  template:
+    metadata:
+      labels:
         app: deployment-paotui-back-end
-    replicas: 3
-    template:
-      metadata:
-        labels:
-          app: deployment-paotui-back-end
-      spec:
-        containers:
-        - name: deployment-paotui-back-end
-          image: magicpowerworld/paotui_back_end:20210714
-          ports:
-          - containerPort: 5000
-
+    spec:
+      containers:
+      - name: deployment-paotui-back-end
+        image: magicpowerworld/paotui_back_end:20210714
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 10
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 10
 ```
 ## Debug service
 ### Using busybox
@@ -156,5 +175,16 @@ kubectl exec -ti busybox -- sh
 # 3
 curl service-paotui-front-end
 ```
-
-
+### Manual overwrite pod eviction second
+When node become notready state the pod will leave the node in 10sec. 
+```yaml=
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 10
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 10
+```
