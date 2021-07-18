@@ -160,10 +160,13 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: deployment-paotui-back-end
-        image: magicpowerworld/paotui_back_end:20210714
+        image: magicpowerworld/paotui_back_end:20210718
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: paotui-be-cm
       tolerations:
       - effect: NoExecute
         key: node.kubernetes.io/unreachable
@@ -175,8 +178,7 @@ spec:
         tolerationSeconds: 10
 
 ```
-## Debug service
-### Using busybox
+## Using busybox debug service
 ```shell=
 # 1
 cat<<EOF | kubectl apply -f -
@@ -200,7 +202,18 @@ kubectl exec -ti busybox -- sh
 # 3
 curl service-paotui-front-end
 ```
-### Manual overwrite pod eviction second
+## Using configmap store config data
+```yaml=
+      - name: deployment-paotui-back-end
+        image: magicpowerworld/paotui_back_end:20210718
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: paotui-be-cm
+```
+## Manual overwrite pod eviction second
 When node become notready state the pod will leave the node in 10sec. 
 ```yaml=
       tolerations:
@@ -213,7 +226,7 @@ When node become notready state the pod will leave the node in 10sec.
         operator: Exists
         tolerationSeconds: 10
 ```
-### Ensure pods spread evenly across nodes
+## Ensure pods spread evenly across nodes
 Affinity define how pods creation distributed across nodes, podAntiAffinity will ensure not all pods created on one single host. It enhances pods availability. 
 ```yaml=
       affinity:
