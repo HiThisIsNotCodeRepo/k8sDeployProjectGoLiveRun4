@@ -115,7 +115,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: deployment-paotui-front-end
-        image: magicpowerworld/paotui_front_end:20210714
+        image: magicpowerworld/paotui_front_end:20210718
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -160,7 +160,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: deployment-paotui-back-end
-        image: magicpowerworld/paotui_back_end:20210718
+        image: magicpowerworld/paotui_back_end:20210719
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
@@ -176,7 +176,6 @@ spec:
         key: node.kubernetes.io/not-ready
         operator: Exists
         tolerationSeconds: 10
-
 ```
 ## Using busybox debug service
 ```shell=
