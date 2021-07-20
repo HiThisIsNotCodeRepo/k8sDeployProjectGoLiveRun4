@@ -269,35 +269,38 @@ metadata:
   name: paotui-prom-ingress
   namespace: monitoring
 spec:
-  tls:
-  - hosts:
-    - paotui.sg
-    secretName: paotui-ingress-secret
   rules:
-  - host: paotui.sg
+  - host: alert.paotui.sg
     http:
       paths:
-        - path: /alert
+        - path: /
           pathType: Prefix
           backend:
             service:
               name: alertmanager-main
               port:
                 number: 9093
-        - path: /grafana
+  - host: grafana.paotui.sg
+    http:
+      paths:
+        - path: /
           pathType: Prefix
           backend:
             service:
               name: grafana
               port:
                 number: 3000
-        - path: /prom
+  - host: prom.paotui.sg
+    http:
+      paths:
+        - path: /
           pathType: Prefix
           backend:
             service:
               name: prometheus-k8s
               port:
                 number: 9090
+
 ```
 ![image](https://user-images.githubusercontent.com/43861132/126285780-fe4fc510-8435-4d5a-8457-872b74edfa16.png)
 ![image](https://user-images.githubusercontent.com/43861132/126285793-faab14c8-2cb9-4ad2-a12a-b527893613de.png)
