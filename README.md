@@ -247,3 +247,58 @@ Affinity define how pods creation distributed across nodes, podAntiAffinity will
               topologyKey: kubernetes.io/hostname
 ```
 ![](https://i.imgur.com/hnZbtNR.png)
+## kube-prometheus
+It enable use Prometheus to monitor Kubernetes and applications running on Kubernetes.
+### Installation Guide
+```shell
+# 1
+git clone -b release-0.8 --single-branch https://github.com/coreos/kube-prometheus.git
+# 2
+kubectl create -f kube-prometheus/manifests/setup
+# 3
+kubectl create -f kube-prometheus/manifests
+```
+### Create Ingress
+```yaml=
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  name: paotui-prom-ingress
+  namespace: monitoring
+spec:
+  tls:
+  - hosts:
+    - paotui.sg
+    secretName: paotui-ingress-secret
+  rules:
+  - host: paotui.sg
+    http:
+      paths:
+        - path: /alert
+          pathType: Prefix
+          backend:
+            service:
+              name: alertmanager-main
+              port:
+                number: 9093
+        - path: /grafana
+          pathType: Prefix
+          backend:
+            service:
+              name: grafana
+              port:
+                number: 3000
+        - path: /prom
+          pathType: Prefix
+          backend:
+            service:
+              name: prometheus-k8s
+              port:
+                number: 9090
+```
+![image](https://user-images.githubusercontent.com/43861132/126285780-fe4fc510-8435-4d5a-8457-872b74edfa16.png)
+![image](https://user-images.githubusercontent.com/43861132/126285793-faab14c8-2cb9-4ad2-a12a-b527893613de.png)
+![image](https://user-images.githubusercontent.com/43861132/126285820-bf2fe0bf-798a-41cc-9dc2-f820a783ede3.png)
+
