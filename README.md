@@ -248,7 +248,8 @@ Affinity define how pods creation distributed across nodes, podAntiAffinity will
 ```
 ![](https://i.imgur.com/hnZbtNR.png)
 ## kube-prometheus
-It enable use Prometheus to monitor Kubernetes and applications running on Kubernetes.
+It enable use Prometheus to monitor Kubernetes and applications running on Kubernetes, [link](https://github.com/prometheus-operator/kube-prometheus)
+![image](https://user-images.githubusercontent.com/43861132/126287492-e41a30a3-62fe-4875-959e-b7ec266e2da6.png)
 ### Installation Guide
 ```shell
 # 1
