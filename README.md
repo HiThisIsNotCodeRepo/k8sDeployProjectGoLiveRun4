@@ -305,4 +305,7 @@ spec:
 ![image](https://user-images.githubusercontent.com/43861132/126285780-fe4fc510-8435-4d5a-8457-872b74edfa16.png)
 ![image](https://user-images.githubusercontent.com/43861132/126285793-faab14c8-2cb9-4ad2-a12a-b527893613de.png)
 ![image](https://user-images.githubusercontent.com/43861132/126285820-bf2fe0bf-798a-41cc-9dc2-f820a783ede3.png)
+### A simpler alternative to monitor web application uptime
+Using My Pingdom service sms&email alert will send to administrator to inform application uptime & downtime information.
+![image](https://user-images.githubusercontent.com/43861132/126352117-cf9510e7-fa6e-4363-906e-beb2f4d86dde.png)
 
