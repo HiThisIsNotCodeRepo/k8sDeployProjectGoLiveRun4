@@ -21,7 +21,7 @@ kubectl create secret tls paotui-ingress-secret --cert=paotui.crt --key=paotui.k
 ```
 ## Deployment file
 ```yaml
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -39,16 +39,20 @@ spec:
   - host: paotui.sg
     http:
       paths:
-      - backend:
-          serviceName: service-paotui-back-end
-          servicePort: 80
-        path: /api/v1
-        pathType: Prefix
-      - backend:
-          serviceName: service-paotui-front-end
-          servicePort: 80
-        path: /
-
+        - path: /api/v1
+          pathType: Prefix
+          backend:
+            service:
+              name: service-paotui-back-end
+              port:
+                number: 80
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: service-paotui-front-end
+              port:
+                number: 80
 ---
 apiVersion: v1
 kind: Service
@@ -176,6 +180,7 @@ spec:
         key: node.kubernetes.io/not-ready
         operator: Exists
         tolerationSeconds: 10
+
 ```
 ## Using busybox debug service
 ```shell=
